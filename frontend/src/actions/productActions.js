@@ -34,7 +34,6 @@ function detailProduct(id){
         dispatch({type : PRODUCT_DETAILS_REQUEST})
 
         axios.get( `/api/products/${id}`)
-        
         .then(res =>{
             dispatch({
                 type: PRODUCT_DETAILS_SUCCESS,
