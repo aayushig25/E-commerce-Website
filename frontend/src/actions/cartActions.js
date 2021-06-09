@@ -1,5 +1,10 @@
 import axios from 'axios'
-import {CART_ADD_ITEM, CART_REMOVE_ITEM} from '../constants/cartConstants'
+import { 
+    CART_ADD_ITEM, 
+    CART_REMOVE_ITEM, 
+    CART_SAVE_SHIPPING_ADDRESS,
+    CART_SAVE_PAYMENT_METHOD
+} from '../constants/cartConstants'
 
 function addToCart(id, qty){
     
@@ -14,7 +19,7 @@ function addToCart(id, qty){
                     image: res.data.image,
                     price: res.data.price,
                     countInStock: res.data.countInStock,
-                    qty
+                    qty: qty,
                 }
             })
 
@@ -33,4 +38,26 @@ function removeFromCart(id){
         localStorage.setItem('cartItems', JSON.stringify( getState().cart.cartItems))
     }
 }
-export { addToCart, removeFromCart }
+
+function saveShippingAddress(data){
+    return (dispatch) => {
+        dispatch({
+            type: CART_SAVE_SHIPPING_ADDRESS,
+            payload: data
+        })
+
+        localStorage.setItem('shippingAddress', JSON.stringify(data))
+    }
+}
+
+function savePaymentMethod(data){
+    return (dispatch) => {
+        dispatch({
+            type: CART_SAVE_PAYMENT_METHOD,
+            payload: data
+        })
+
+        localStorage.setItem('paymentMethod', JSON.stringify(data))
+    }
+}
+export { addToCart, removeFromCart, saveShippingAddress, savePaymentMethod }
